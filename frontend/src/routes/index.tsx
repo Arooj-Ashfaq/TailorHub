@@ -1,8 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Award, Scissors, Sparkles, Ruler, Package, Star, Quote } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { SectionHeader } from "@/components/site/Section";
+import { getServices, getTestimonials } from "@/lib/api";
+import { resolveImage } from "@/lib/product-images";
 import hero from "@/assets/hero.jpg";
 import serviceSuit from "@/assets/service-suit.jpg";
 import serviceWedding from "@/assets/service-wedding.jpg";
@@ -117,13 +120,9 @@ function Marquee() {
   );
 }
 
-const services = [
-  { title: "Custom Suits", price: 899, days: "3–4 weeks", img: serviceSuit, desc: "Fully canvassed two- and three-piece suits, cut on your personal block." },
-  { title: "Wedding Suits", price: 1499, days: "5–6 weeks", img: serviceWedding, desc: "Tuxedos and morning suits for the most photographed day of your life." },
-  { title: "Shirts", price: 189, days: "2–3 weeks", img: serviceShirt, desc: "Bespoke shirting from Thomas Mason and Albini poplins & twills." },
-];
-
 function Services() {
+  const { data: allServices = [], isLoading, isError } = useQuery({ queryKey: ["services"], queryFn: getServices });
+  const services = allServices.slice(0, 3);
   return (
     <section className="mx-auto max-w-7xl px-6 py-28">
       <SectionHeader
@@ -131,39 +130,53 @@ function Services() {
         title={<>Bespoke, from <em className="text-gradient-gold not-italic">first draft</em> to final stitch</>}
         description="Every garment is drafted from scratch on paper, cut by hand, and finished across up to 60 hours of atelier work."
       />
-      <div className="mt-16 grid gap-8 md:grid-cols-3">
-        {services.map((s) => (
-          <article key={s.title} className="hover-lift group overflow-hidden rounded-2xl border border-border/60 bg-card">
-            <div className="relative aspect-[4/5] overflow-hidden">
-              <img
-                src={s.img}
-                alt={s.title}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
-              <div className="absolute left-5 top-5 rounded-full border border-gold/40 bg-background/70 px-3 py-1 text-xs uppercase tracking-widest text-gold backdrop-blur">
-                {s.days}
+      {isLoading && (
+        <div className="mt-16 grid gap-8 md:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="aspect-[4/5] animate-pulse rounded-2xl border border-border/60 bg-card" />
+          ))}
+        </div>
+      )}
+      {isError && (
+        <p className="mt-16 text-center text-sm text-muted-foreground">
+          Couldn't load services right now — make sure the backend is running on port 4000.
+        </p>
+      )}
+      {!isLoading && !isError && (
+        <div className="mt-16 grid gap-8 md:grid-cols-3">
+          {services.map((s) => (
+            <article key={s.id} className="hover-lift group overflow-hidden rounded-2xl border border-border/60 bg-card">
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <img
+                  src={resolveImage(s.image)}
+                  alt={s.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                <div className="absolute left-5 top-5 rounded-full border border-gold/40 bg-background/70 px-3 py-1 text-xs uppercase tracking-widest text-gold backdrop-blur">
+                  {s.duration}
+                </div>
               </div>
-            </div>
-            <div className="p-6">
-              <h3 className="font-display text-2xl">{s.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-              <div className="mt-6 flex items-center justify-between">
-                <span className="text-xs uppercase tracking-widest text-muted-foreground">
-                  From <span className="ml-1 text-gold">${s.price}</span>
-                </span>
-                <Link
-                  to="/services"
-                  className="inline-flex items-center gap-1 text-sm text-foreground hover:text-gold"
-                >
-                  Book <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
+              <div className="p-6">
+                <h3 className="font-display text-2xl">{s.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{s.description}</p>
+                <div className="mt-6 flex items-center justify-between">
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">
+                    From <span className="ml-1 text-gold">${s.price}</span>
+                  </span>
+                  <Link
+                    to="/services"
+                    className="inline-flex items-center gap-1 text-sm text-foreground hover:text-gold"
+                  >
+                    Book <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -264,36 +277,46 @@ function Portfolio() {
 }
 
 function Testimonials() {
-  const t = [
-    { name: "James Whitcomb", role: "CEO, Whitcomb & Sons", quote: "The finest suit I have ever owned—cut, cloth and finish are peerless." },
-    { name: "Adaeze Okonkwo", role: "Fashion Editor", quote: "TailorHub understand proportion the way great architects understand light." },
-    { name: "Marco Bellini", role: "Groom, June '24", quote: "They made me feel like a film star on the most important day of my life." },
-  ];
+  const { data: t = [], isLoading, isError } = useQuery({ queryKey: ["testimonials"], queryFn: getTestimonials });
   return (
     <section className="border-y border-border/40 bg-ink">
       <div className="mx-auto max-w-7xl px-6 py-28">
         <SectionHeader eyebrow="Testimonials" title="What our clients wear home" />
-        <div className="mt-16 grid gap-8 md:grid-cols-3">
-          {t.map((r) => (
-            <figure key={r.name} className="glass-panel rounded-2xl p-8">
-              <Quote className="h-6 w-6 text-gold" />
-              <blockquote className="mt-4 font-display text-xl leading-snug">
-                “{r.quote}”
-              </blockquote>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex text-gold">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
-                  ))}
+        {isLoading && (
+          <div className="mt-16 grid gap-8 md:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-56 animate-pulse rounded-2xl glass-panel" />
+            ))}
+          </div>
+        )}
+        {isError && (
+          <p className="mt-16 text-center text-sm text-muted-foreground">
+            Couldn't load testimonials right now — make sure the backend is running on port 4000.
+          </p>
+        )}
+        {!isLoading && !isError && (
+          <div className="mt-16 grid gap-8 md:grid-cols-3">
+            {t.map((r) => (
+              <figure key={r.id} className="glass-panel rounded-2xl p-8">
+                <Quote className="h-6 w-6 text-gold" />
+                <blockquote className="mt-4 font-display text-xl leading-snug">
+                  “{r.quote}”
+                </blockquote>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="flex text-gold">
+                    {Array.from({ length: r.rating }).map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-current" />
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <figcaption className="mt-4">
-                <div className="text-sm font-medium">{r.name}</div>
-                <div className="text-xs text-muted-foreground">{r.role}</div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+                <figcaption className="mt-4">
+                  <div className="text-sm font-medium">{r.name}</div>
+                  <div className="text-xs text-muted-foreground">{r.role}</div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

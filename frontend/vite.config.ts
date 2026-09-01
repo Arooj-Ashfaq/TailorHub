@@ -12,4 +12,21 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    server: {
+      // Bind explicitly to IPv4 — some machines/containers don't support the
+      // default "::" (IPv6) bind and fail with EAFNOSUPPORT.
+      host: "0.0.0.0",
+      // Forward API calls to the Express backend (see /backend) during local
+      // dev, so the frontend can just fetch("/api/...") same-origin — no CORS.
+      // Run the backend separately with `npm run dev` inside /backend (or use
+      // the root `npm run dev:full` script to start both at once).
+      proxy: {
+        "/api": {
+          target: "http://localhost:4000",
+          changeOrigin: false,
+        },
+      },
+    },
+  },
 });

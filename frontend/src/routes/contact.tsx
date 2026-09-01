@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useRef } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { SectionHeader } from "@/components/site/Section";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
+import { createAppointment } from "@/lib/api";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -17,6 +21,30 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const mutation = useMutation({
+    mutationFn: createAppointment,
+    onSuccess: () => {
+      toast.success("Thank you — a tailor will be in touch shortly.");
+      formRef.current?.reset();
+    },
+    onError: (err: Error) => {
+      toast.error(err.message || "Something went wrong. Please try again.");
+    },
+  });
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    mutation.mutate({
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      phone: String(formData.get("phone") || ""),
+      fittingType: String(formData.get("fittingType") || ""),
+      notes: String(formData.get("notes") || ""),
+    });
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Nav />
@@ -31,7 +59,8 @@ function ContactPage() {
 
         <section className="mx-auto grid max-w-7xl gap-10 px-6 pb-28 md:grid-cols-5">
           <form
-            onSubmit={(e) => { e.preventDefault(); alert("Thank you — a tailor will be in touch shortly."); }}
+            ref={formRef}
+            onSubmit={handleSubmit}
             className="glass-panel md:col-span-3 rounded-3xl p-8 md:p-10 space-y-4"
           >
             <div className="grid gap-4 md:grid-cols-2">
@@ -40,19 +69,23 @@ function ContactPage() {
             </div>
             <Field label="Phone" name="phone" />
             <div>
-              <label className="text-xs uppercase tracking-widest text-gold">Fitting type</label>
-              <select className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold">
+              <label htmlFor="fittingType" className="text-xs uppercase tracking-widest text-gold">Fitting type</label>
+              <select id="fittingType" name="fittingType" className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold">
                 <option>In-store visit</option>
                 <option>Home visit</option>
                 <option>Video consultation</option>
               </select>
             </div>
             <div>
-              <label className="text-xs uppercase tracking-widest text-gold">Notes</label>
-              <textarea rows={5} className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold" />
+              <label htmlFor="notes" className="text-xs uppercase tracking-widest text-gold">Notes</label>
+              <textarea id="notes" name="notes" rows={5} className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold" />
             </div>
-            <button className="rounded-full bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground hover:shadow-[0_0_40px_-5px_var(--gold)] transition-all">
-              Request Appointment
+            <button
+              type="submit"
+              disabled={mutation.isPending}
+              className="rounded-full bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground hover:shadow-[0_0_40px_-5px_var(--gold)] transition-all disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {mutation.isPending ? "Sending…" : "Request Appointment"}
             </button>
           </form>
 
