@@ -42,7 +42,14 @@ Open **http://localhost:8080**. The Vite dev server proxies `/api/*` to `http://
 - **Testimonials** — pulled from the backend
 - **Contact / fitting requests** — submits to the backend; if you're logged in, the request is
   linked to your account automatically
-- **Accounts** — sign up, log in, and view your fitting-request history on `/account`
+- **Accounts** — sign up as a **buyer** or **seller**, log in, and view your fitting-request
+  history on `/account`
+- **Seller Dashboard** (`/seller`, sellers and admins) — create, edit and delete your own
+  products and services with full forms
+- **Admin Panel** (`/admin`, admins only) — manage every user (including changing roles), every
+  product/service, testimonials, and every fitting request
+
+Demo accounts (see the backend README) let you try each role immediately without signing up.
 
 ## Scripts
 

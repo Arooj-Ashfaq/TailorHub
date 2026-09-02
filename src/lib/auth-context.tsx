@@ -6,7 +6,7 @@ interface AuthContextValue {
   user: api.User | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string, password: string) => Promise<void>;
+  signup: (name: string, email: string, password: string, role: "buyer" | "seller") => Promise<void>;
   logout: () => void;
 }
 
@@ -35,8 +35,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(user);
   }
 
-  async function signup(name: string, email: string, password: string) {
-    const { user, token } = await api.signup({ name, email, password });
+  async function signup(name: string, email: string, password: string, role: "buyer" | "seller") {
+    const { user, token } = await api.signup({ name, email, password, role });
     setToken(token);
     setUser(user);
   }
@@ -44,6 +44,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function logout() {
     clearToken();
     setUser(null);
+    api.logout().catch(() => {
+      // Best-effort — the local token/state is already cleared either way.
+    });
   }
 
   return (

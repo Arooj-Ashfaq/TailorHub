@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -71,6 +71,25 @@ function AccountPage() {
                 <Mail className="h-4 w-4 text-gold" />
                 <span className="text-sm text-muted-foreground">{user.email}</span>
               </div>
+              <div className="rounded-full border border-gold/30 px-3 py-1 text-center text-[10px] uppercase tracking-widest text-gold">
+                {user.role}
+              </div>
+              {(user.role === "seller" || user.role === "admin") && (
+                <Link
+                  to="/seller"
+                  className="block w-full rounded-full border border-border px-4 py-2.5 text-center text-xs uppercase tracking-widest hover:border-gold hover:text-gold"
+                >
+                  Seller Dashboard
+                </Link>
+              )}
+              {user.role === "admin" && (
+                <Link
+                  to="/admin"
+                  className="block w-full rounded-full border border-border px-4 py-2.5 text-center text-xs uppercase tracking-widest hover:border-gold hover:text-gold"
+                >
+                  Admin Panel
+                </Link>
+              )}
               <button
                 onClick={handleLogout}
                 className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border border-border px-4 py-2.5 text-xs uppercase tracking-widest hover:border-gold hover:text-gold"

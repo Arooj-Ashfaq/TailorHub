@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as SellerRouteImport } from './routes/seller'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SignupRouteImport } from './routes/signup'
@@ -33,6 +35,11 @@ const AccountRoute = AccountRouteImport.update({
   path: '/account',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -41,6 +48,11 @@ const ContactRoute = ContactRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SellerRoute = SellerRouteImport.update({
+  id: '/seller',
+  path: '/seller',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -63,8 +75,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
+  '/seller': typeof SellerRoute
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
   '/signup': typeof SignupRoute
@@ -73,8 +87,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
+  '/seller': typeof SellerRoute
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
   '/signup': typeof SignupRoute
@@ -84,8 +100,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
+  '/seller': typeof SellerRoute
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
   '/signup': typeof SignupRoute
@@ -96,8 +114,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/account'
+    | '/admin'
     | '/contact'
     | '/login'
+    | '/seller'
     | '/services'
     | '/shop'
     | '/signup'
@@ -106,8 +126,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/account'
+    | '/admin'
     | '/contact'
     | '/login'
+    | '/seller'
     | '/services'
     | '/shop'
     | '/signup'
@@ -116,8 +138,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/account'
+    | '/admin'
     | '/contact'
     | '/login'
+    | '/seller'
     | '/services'
     | '/shop'
     | '/signup'
@@ -127,8 +151,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AccountRoute: typeof AccountRoute
+  AdminRoute: typeof AdminRoute
   ContactRoute: typeof ContactRoute
   LoginRoute: typeof LoginRoute
+  SellerRoute: typeof SellerRoute
   ServicesRoute: typeof ServicesRoute
   ShopRoute: typeof ShopRoute
   SignupRoute: typeof SignupRoute
@@ -157,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -169,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seller': {
+      id: '/seller'
+      path: '/seller'
+      fullPath: '/seller'
+      preLoaderRoute: typeof SellerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -199,8 +239,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
+  AdminRoute: AdminRoute,
   ContactRoute: ContactRoute,
   LoginRoute: LoginRoute,
+  SellerRoute: SellerRoute,
   ServicesRoute: ServicesRoute,
   ShopRoute: ShopRoute,
   SignupRoute: SignupRoute,

@@ -42,6 +42,16 @@ export function Nav() {
           </ul>
 
           <div className="hidden items-center gap-4 md:flex">
+            {!isLoading && user?.role === "seller" && (
+              <Link to="/seller" className="text-sm text-muted-foreground transition-colors hover:text-gold">
+                Seller Dashboard
+              </Link>
+            )}
+            {!isLoading && user?.role === "admin" && (
+              <Link to="/admin" className="text-sm text-muted-foreground transition-colors hover:text-gold">
+                Admin Panel
+              </Link>
+            )}
             {!isLoading && (
               <Link
                 to={user ? "/account" : "/login"}
@@ -82,6 +92,20 @@ export function Nav() {
                   </Link>
                 </li>
               ))}
+              {user?.role === "seller" && (
+                <li>
+                  <Link to="/seller" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground hover:text-gold">
+                    Seller Dashboard
+                  </Link>
+                </li>
+              )}
+              {user?.role === "admin" && (
+                <li>
+                  <Link to="/admin" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground hover:text-gold">
+                    Admin Panel
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link
                   to={user ? "/account" : "/login"}

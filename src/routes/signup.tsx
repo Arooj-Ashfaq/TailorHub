@@ -17,6 +17,7 @@ function SignupPage() {
   const { signup } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [role, setRole] = useState<"buyer" | "seller">("buyer");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,7 +28,7 @@ function SignupPage() {
 
     setIsSubmitting(true);
     try {
-      await signup(name, email, password);
+      await signup(name, email, password, role);
       toast.success("Account created — welcome to TailorHub!");
       navigate({ to: "/account" });
     } catch (err) {
@@ -64,6 +65,31 @@ function SignupPage() {
                 required
                 className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold"
               />
+            </div>
+            <div>
+              <span className="text-xs uppercase tracking-widest text-gold">Account type</span>
+              <div className="mt-2 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setRole("buyer")}
+                  className={`rounded-lg border px-4 py-3 text-sm transition-colors ${
+                    role === "buyer" ? "border-gold bg-secondary text-gold" : "border-border bg-secondary/50 text-muted-foreground hover:border-gold/50"
+                  }`}
+                >
+                  Buyer
+                  <span className="mt-1 block text-xs text-muted-foreground">Book fittings, shop</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRole("seller")}
+                  className={`rounded-lg border px-4 py-3 text-sm transition-colors ${
+                    role === "seller" ? "border-gold bg-secondary text-gold" : "border-border bg-secondary/50 text-muted-foreground hover:border-gold/50"
+                  }`}
+                >
+                  Seller
+                  <span className="mt-1 block text-xs text-muted-foreground">List products &amp; services</span>
+                </button>
+              </div>
             </div>
             <div>
               <label htmlFor="password" className="text-xs uppercase tracking-widest text-gold">Password</label>
