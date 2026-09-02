@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Scissors } from "lucide-react";
+import { Menu, X, Scissors, User } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
 
 const links = [
   { to: "/", label: "Home" },
@@ -12,6 +13,8 @@ const links = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const { user, isLoading } = useAuth();
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <div className="glass-panel border-b border-t-0 border-l-0 border-r-0">
@@ -38,7 +41,16 @@ export function Nav() {
             ))}
           </ul>
 
-          <div className="hidden md:block">
+          <div className="hidden items-center gap-4 md:flex">
+            {!isLoading && (
+              <Link
+                to={user ? "/account" : "/login"}
+                className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-gold"
+              >
+                <User className="h-4 w-4" />
+                {user ? user.name.split(" ")[0] : "Log In"}
+              </Link>
+            )}
             <Link
               to="/services"
               className="inline-flex items-center rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-all hover:shadow-[0_0_30px_-5px_var(--gold)]"
@@ -70,6 +82,15 @@ export function Nav() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  to={user ? "/account" : "/login"}
+                  onClick={() => setOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-gold"
+                >
+                  {user ? "My Account" : "Log In / Sign Up"}
+                </Link>
+              </li>
             </ul>
           </div>
         )}

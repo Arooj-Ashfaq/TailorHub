@@ -1,3 +1,5 @@
+import { getToken } from "./auth-storage";
+
 export type Product = {
   id: number;
   name: string;
@@ -34,14 +36,32 @@ export type AppointmentInput = {
 
 export type Appointment = AppointmentInput & {
   id: number;
+  userId: number | null;
   status: string;
   createdAt: string;
 };
 
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+};
+
+export type AuthResponse = {
+  user: User;
+  token: string;
+};
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = getToken();
   const res = await fetch(path, {
-    headers: { "Content-Type": "application/json" },
     ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...init?.headers,
+    },
   });
 
   if (!res.ok) {
@@ -69,4 +89,26 @@ export function createAppointment(data: AppointmentInput): Promise<Appointment> 
     method: "POST",
     body: JSON.stringify(data),
   });
+}
+
+export function getMyAppointments(): Promise<Appointment[]> {
+  return request<Appointment[]>("/api/appointments/mine");
+}
+
+export function signup(data: { name: string; email: string; password: string }): Promise<AuthResponse> {
+  return request<AuthResponse>("/api/auth/signup", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function login(data: { email: string; password: string }): Promise<AuthResponse> {
+  return request<AuthResponse>("/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function getCurrentUser(): Promise<User> {
+  return request<User>("/api/auth/me");
 }

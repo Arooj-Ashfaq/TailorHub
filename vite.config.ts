@@ -17,10 +17,11 @@ export default defineConfig({
       // Bind explicitly to IPv4 — some machines/containers don't support the
       // default "::" (IPv6) bind and fail with EAFNOSUPPORT.
       host: "0.0.0.0",
-      // Forward API calls to the Express backend (see /backend) during local
-      // dev, so the frontend can just fetch("/api/...") same-origin — no CORS.
-      // Run the backend separately with `npm run dev` inside /backend (or use
-      // the root `npm run dev:full` script to start both at once).
+      // Forward API calls to the TailorHub-Backend API (see the sibling repo:
+      // github.com/Arooj-Ashfaq/TailorHub-Backend) during local dev, so the
+      // frontend can just fetch("/api/...") same-origin — no CORS.
+      // Clone that repo alongside this one and run its `npm run dev`
+      // (default port 4000) before starting this dev server.
       proxy: {
         "/api": {
           target: "http://localhost:4000",
