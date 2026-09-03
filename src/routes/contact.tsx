@@ -12,7 +12,10 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — TailorHub Atelier" },
-      { name: "description", content: "Book a private fitting or reach the TailorHub atelier team." },
+      {
+        name: "description",
+        content: "Book a private fitting or reach the TailorHub atelier team.",
+      },
       { property: "og:title", content: "Contact TailorHub" },
       { property: "og:description", content: "Book a fitting or reach our master tailors." },
     ],
@@ -52,7 +55,11 @@ function ContactPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <SectionHeader
             eyebrow="Contact"
-            title={<>Book a <em className="text-gradient-gold not-italic">private fitting</em></>}
+            title={
+              <>
+                Book a <em className="text-gradient-gold not-italic">private fitting</em>
+              </>
+            }
             description="Visit us at the atelier, request a home visit, or arrange a video consultation."
           />
         </section>
@@ -69,16 +76,29 @@ function ContactPage() {
             </div>
             <Field label="Phone" name="phone" />
             <div>
-              <label htmlFor="fittingType" className="text-xs uppercase tracking-widest text-gold">Fitting type</label>
-              <select id="fittingType" name="fittingType" className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold">
+              <label htmlFor="fittingType" className="text-xs uppercase tracking-widest text-gold">
+                Fitting type
+              </label>
+              <select
+                id="fittingType"
+                name="fittingType"
+                className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold"
+              >
                 <option>In-store visit</option>
                 <option>Home visit</option>
                 <option>Video consultation</option>
               </select>
             </div>
             <div>
-              <label htmlFor="notes" className="text-xs uppercase tracking-widest text-gold">Notes</label>
-              <textarea id="notes" name="notes" rows={5} className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold" />
+              <label htmlFor="notes" className="text-xs uppercase tracking-widest text-gold">
+                Notes
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows={5}
+                className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold"
+              />
             </div>
             <button
               type="submit"
@@ -105,13 +125,29 @@ function ContactPage() {
 function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
     <div>
-      <label htmlFor={name} className="text-xs uppercase tracking-widest text-gold">{label}</label>
-      <input id={name} name={name} type={type} required className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold" />
+      <label htmlFor={name} className="text-xs uppercase tracking-widest text-gold">
+        {label}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        required
+        className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold"
+      />
     </div>
   );
 }
 
-function Info({ icon: Icon, title, body }: { icon: React.ElementType; title: string; body: string }) {
+function Info({
+  icon: Icon,
+  title,
+  body,
+}: {
+  icon: React.ElementType;
+  title: string;
+  body: string;
+}) {
   return (
     <div className="glass-panel rounded-2xl p-6">
       <Icon className="h-5 w-5 text-gold" />

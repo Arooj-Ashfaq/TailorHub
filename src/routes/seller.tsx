@@ -23,8 +23,14 @@ function SellerPage() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (!user) { navigate({ to: "/login" }); return; }
-    if (user.role !== "seller" && user.role !== "admin") { navigate({ to: "/account" }); return; }
+    if (!user) {
+      navigate({ to: "/login" });
+      return;
+    }
+    if (user.role !== "seller" && user.role !== "admin") {
+      navigate({ to: "/account" });
+      return;
+    }
   }, [isLoading, user, navigate]);
 
   if (isLoading || !user || (user.role !== "seller" && user.role !== "admin")) {
@@ -32,7 +38,9 @@ function SellerPage() {
       <div className="min-h-screen bg-background">
         <Nav />
         <main className="pt-24">
-          <div className="mx-auto max-w-4xl px-6 py-24 text-center text-sm text-muted-foreground">Loading…</div>
+          <div className="mx-auto max-w-4xl px-6 py-24 text-center text-sm text-muted-foreground">
+            Loading…
+          </div>
         </main>
         <Footer />
       </div>
@@ -44,7 +52,11 @@ function SellerPage() {
       <Nav />
       <main className="pt-24">
         <section className="mx-auto max-w-5xl px-6 py-16">
-          <SectionHeader eyebrow="Seller Dashboard" title="Manage your listings" description="Create, edit and remove the products and services you offer." />
+          <SectionHeader
+            eyebrow="Seller Dashboard"
+            title="Manage your listings"
+            description="Create, edit and remove the products and services you offer."
+          />
           <div className="mt-12">
             <ProductsPanel />
           </div>
@@ -63,7 +75,10 @@ function ProductsPanel() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<api.Product | null>(null);
 
-  const { data: products = [], isLoading } = useQuery({ queryKey: ["products", "mine"], queryFn: api.getMyProducts });
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["products", "mine"],
+    queryFn: api.getMyProducts,
+  });
 
   const createMutation = useMutation({
     mutationFn: api.createProduct,
@@ -76,7 +91,8 @@ function ProductsPanel() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<api.Product> }) => api.updateProduct(id, data),
+    mutationFn: ({ id, data }: { id: number; data: Partial<api.Product> }) =>
+      api.updateProduct(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       toast.success("Product updated.");
@@ -116,7 +132,10 @@ function ProductsPanel() {
       <div className="flex items-center justify-between">
         <h3 className="font-display text-2xl">Products</h3>
         <button
-          onClick={() => { setEditing(null); setShowForm((v) => !v); }}
+          onClick={() => {
+            setEditing(null);
+            setShowForm((v) => !v);
+          }}
           className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
         >
           {showForm ? <X className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
@@ -125,12 +144,40 @@ function ProductsPanel() {
       </div>
 
       {(showForm || editing) && (
-        <form onSubmit={handleSubmit} className="glass-panel mt-4 grid gap-4 rounded-2xl p-6 sm:grid-cols-2">
+        <form
+          onSubmit={handleSubmit}
+          className="glass-panel mt-4 grid gap-4 rounded-2xl p-6 sm:grid-cols-2"
+        >
           <Field label="Name" name="name" defaultValue={editing?.name} required />
-          <SelectField label="Category" name="category" options={CATEGORIES} defaultValue={editing?.category} />
-          <Field label="Price ($)" name="price" type="number" step="0.01" defaultValue={editing?.price} required />
-          <Field label="Rating (0–5)" name="rating" type="number" step="0.1" min={0} max={5} defaultValue={editing?.rating ?? 5} />
-          <SelectField label="Image" name="image" options={IMAGE_KEYS} defaultValue={editing?.image} />
+          <SelectField
+            label="Category"
+            name="category"
+            options={CATEGORIES}
+            defaultValue={editing?.category}
+          />
+          <Field
+            label="Price ($)"
+            name="price"
+            type="number"
+            step="0.01"
+            defaultValue={editing?.price}
+            required
+          />
+          <Field
+            label="Rating (0–5)"
+            name="rating"
+            type="number"
+            step="0.1"
+            min={0}
+            max={5}
+            defaultValue={editing?.rating ?? 5}
+          />
+          <SelectField
+            label="Image"
+            name="image"
+            options={IMAGE_KEYS}
+            defaultValue={editing?.image}
+          />
           <div className="sm:col-span-2">
             <button
               type="submit"
@@ -153,11 +200,16 @@ function ProductsPanel() {
             <div key={p.id} className="flex items-center justify-between p-4">
               <div>
                 <div className="font-medium">{p.name}</div>
-                <div className="text-xs text-muted-foreground">{p.category} · ${p.price}</div>
+                <div className="text-xs text-muted-foreground">
+                  {p.category} · ${p.price}
+                </div>
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => { setEditing(p); setShowForm(false); }}
+                  onClick={() => {
+                    setEditing(p);
+                    setShowForm(false);
+                  }}
                   className="rounded-full border border-border p-2 hover:border-gold hover:text-gold"
                   aria-label="Edit"
                 >
@@ -184,7 +236,10 @@ function ServicesPanel() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<api.Service | null>(null);
 
-  const { data: services = [], isLoading } = useQuery({ queryKey: ["services", "mine"], queryFn: api.getMyServices });
+  const { data: services = [], isLoading } = useQuery({
+    queryKey: ["services", "mine"],
+    queryFn: api.getMyServices,
+  });
 
   const createMutation = useMutation({
     mutationFn: api.createService,
@@ -197,7 +252,8 @@ function ServicesPanel() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<api.Service> }) => api.updateService(id, data),
+    mutationFn: ({ id, data }: { id: number; data: Partial<api.Service> }) =>
+      api.updateService(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["services"] });
       toast.success("Service updated.");
@@ -237,7 +293,10 @@ function ServicesPanel() {
       <div className="flex items-center justify-between">
         <h3 className="font-display text-2xl">Services</h3>
         <button
-          onClick={() => { setEditing(null); setShowForm((v) => !v); }}
+          onClick={() => {
+            setEditing(null);
+            setShowForm((v) => !v);
+          }}
           className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
         >
           {showForm ? <X className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
@@ -246,11 +305,32 @@ function ServicesPanel() {
       </div>
 
       {(showForm || editing) && (
-        <form onSubmit={handleSubmit} className="glass-panel mt-4 grid gap-4 rounded-2xl p-6 sm:grid-cols-2">
+        <form
+          onSubmit={handleSubmit}
+          className="glass-panel mt-4 grid gap-4 rounded-2xl p-6 sm:grid-cols-2"
+        >
           <Field label="Title" name="title" defaultValue={editing?.title} required />
-          <Field label="Duration" name="duration" defaultValue={editing?.duration} placeholder="e.g. 2 weeks" required />
-          <Field label="Price ($)" name="price" type="number" step="0.01" defaultValue={editing?.price} required />
-          <SelectField label="Image" name="image" options={IMAGE_KEYS} defaultValue={editing?.image} />
+          <Field
+            label="Duration"
+            name="duration"
+            defaultValue={editing?.duration}
+            placeholder="e.g. 2 weeks"
+            required
+          />
+          <Field
+            label="Price ($)"
+            name="price"
+            type="number"
+            step="0.01"
+            defaultValue={editing?.price}
+            required
+          />
+          <SelectField
+            label="Image"
+            name="image"
+            options={IMAGE_KEYS}
+            defaultValue={editing?.image}
+          />
           <div className="sm:col-span-2">
             <label className="text-xs uppercase tracking-widest text-gold">Description</label>
             <textarea
@@ -283,11 +363,16 @@ function ServicesPanel() {
             <div key={s.id} className="flex items-center justify-between p-4">
               <div>
                 <div className="font-medium">{s.title}</div>
-                <div className="text-xs text-muted-foreground">{s.duration} · ${s.price}</div>
+                <div className="text-xs text-muted-foreground">
+                  {s.duration} · ${s.price}
+                </div>
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => { setEditing(s); setShowForm(false); }}
+                  onClick={() => {
+                    setEditing(s);
+                    setShowForm(false);
+                  }}
                   className="rounded-full border border-border p-2 hover:border-gold hover:text-gold"
                   aria-label="Edit"
                 >
@@ -326,7 +411,9 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="text-xs uppercase tracking-widest text-gold">{label}</label>
+      <label htmlFor={name} className="text-xs uppercase tracking-widest text-gold">
+        {label}
+      </label>
       <input
         id={name}
         name={name}
@@ -353,7 +440,9 @@ function SelectField({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="text-xs uppercase tracking-widest text-gold">{label}</label>
+      <label htmlFor={name} className="text-xs uppercase tracking-widest text-gold">
+        {label}
+      </label>
       <select
         id={name}
         name={name}
@@ -361,7 +450,9 @@ function SelectField({
         className="mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm outline-none focus:border-gold"
       >
         {options.map((o) => (
-          <option key={o} value={o}>{o}</option>
+          <option key={o} value={o}>
+            {o}
+          </option>
         ))}
       </select>
     </div>

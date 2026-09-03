@@ -6,7 +6,12 @@ interface AuthContextValue {
   user: api.User | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string, password: string, role: "buyer" | "seller") => Promise<void>;
+  signup: (
+    name: string,
+    email: string,
+    password: string,
+    role: "buyer" | "seller",
+  ) => Promise<void>;
   logout: () => void;
 }
 

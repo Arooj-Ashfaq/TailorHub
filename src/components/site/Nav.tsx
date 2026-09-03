@@ -43,18 +43,24 @@ export function Nav() {
 
           <div className="hidden items-center gap-4 md:flex">
             {!isLoading && user?.role === "seller" && (
-              <Link to="/seller" className="text-sm text-muted-foreground transition-colors hover:text-gold">
+              <Link
+                to="/seller"
+                className="text-sm text-muted-foreground transition-colors hover:text-gold"
+              >
                 Seller Dashboard
               </Link>
             )}
             {!isLoading && user?.role === "admin" && (
-              <Link to="/admin" className="text-sm text-muted-foreground transition-colors hover:text-gold">
+              <Link
+                to="/admin"
+                className="text-sm text-muted-foreground transition-colors hover:text-gold"
+              >
                 Admin Panel
               </Link>
             )}
             {!isLoading && (
               <Link
-                to={user ? "/account" : "/login"}
+                to={user ? "/dashboard" : "/login"}
                 className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-gold"
               >
                 <User className="h-4 w-4" />
@@ -94,21 +100,29 @@ export function Nav() {
               ))}
               {user?.role === "seller" && (
                 <li>
-                  <Link to="/seller" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground hover:text-gold">
+                  <Link
+                    to="/seller"
+                    onClick={() => setOpen(false)}
+                    className="block text-sm text-muted-foreground hover:text-gold"
+                  >
                     Seller Dashboard
                   </Link>
                 </li>
               )}
               {user?.role === "admin" && (
                 <li>
-                  <Link to="/admin" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground hover:text-gold">
+                  <Link
+                    to="/admin"
+                    onClick={() => setOpen(false)}
+                    className="block text-sm text-muted-foreground hover:text-gold"
+                  >
                     Admin Panel
                   </Link>
                 </li>
               )}
               <li>
                 <Link
-                  to={user ? "/account" : "/login"}
+                  to={user ? "/dashboard" : "/login"}
                   onClick={() => setOpen(false)}
                   className="block text-sm text-muted-foreground hover:text-gold"
                 >

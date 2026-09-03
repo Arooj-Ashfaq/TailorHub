@@ -10,6 +10,7 @@ login/signup — all backed by a real API instead of mock data.
 ## Run it
 
 Clone both repos as siblings:
+
 ```
 some-folder/
 ├── TailorHub/            (this repo)
@@ -17,6 +18,7 @@ some-folder/
 ```
 
 Start the backend first (see its README for full PostgreSQL setup):
+
 ```sh
 cd TailorHub-Backend
 npm install
@@ -26,6 +28,7 @@ npm run dev              # http://localhost:4000
 ```
 
 Then the frontend:
+
 ```sh
 cd TailorHub
 npm install
@@ -48,18 +51,24 @@ Open **http://localhost:8080**. The Vite dev server proxies `/api/*` to `http://
   products and services with full forms
 - **Admin Panel** (`/admin`, admins only) — manage every user (including changing roles), every
   product/service, testimonials, and every fitting request
+- **`/dashboard`** — a single link that sends each role to its own dashboard (buyer → `/account`,
+  seller → `/seller`, admin → `/admin`); this is what the nav's account link points to
+- **Chat assistant** — a rule-based FAQ widget (bottom-right on every page) that answers common
+  questions about hours, pricing, booking, services and accounts. It's not an AI model — just
+  fast, reliable keyword matching against a small knowledge base, so it always works with no API
+  key or external service required. See `src/components/site/ChatBot.tsx`.
 
 Demo accounts (see the backend README) let you try each role immediately without signing up.
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build (outputs to `.output/`) |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Lint with ESLint |
-| `npm run format` | Format with Prettier |
+| Command           | What it does                             |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Start the dev server                     |
+| `npm run build`   | Production build (outputs to `.output/`) |
+| `npm run preview` | Preview the production build             |
+| `npm run lint`    | Lint with ESLint                         |
+| `npm run format`  | Format with Prettier                     |
 
 ## Where the API is called from
 

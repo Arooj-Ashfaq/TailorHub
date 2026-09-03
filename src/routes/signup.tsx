@@ -30,9 +30,11 @@ function SignupPage() {
     try {
       await signup(name, email, password, role);
       toast.success("Account created — welcome to TailorHub!");
-      navigate({ to: "/account" });
+      navigate({ to: "/dashboard" });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Couldn't create your account. Please try again.");
+      toast.error(
+        err instanceof Error ? err.message : "Couldn't create your account. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -43,11 +45,17 @@ function SignupPage() {
       <Nav />
       <main className="pt-24">
         <section className="mx-auto max-w-md px-6 py-16">
-          <SectionHeader eyebrow="Account" title="Create an account" description="Save your fitting history and book faster next time." />
+          <SectionHeader
+            eyebrow="Account"
+            title="Create an account"
+            description="Save your fitting history and book faster next time."
+          />
 
           <form onSubmit={handleSubmit} className="glass-panel mt-10 space-y-4 rounded-3xl p-8">
             <div>
-              <label htmlFor="name" className="text-xs uppercase tracking-widest text-gold">Full name</label>
+              <label htmlFor="name" className="text-xs uppercase tracking-widest text-gold">
+                Full name
+              </label>
               <input
                 id="name"
                 name="name"
@@ -57,7 +65,9 @@ function SignupPage() {
               />
             </div>
             <div>
-              <label htmlFor="email" className="text-xs uppercase tracking-widest text-gold">Email</label>
+              <label htmlFor="email" className="text-xs uppercase tracking-widest text-gold">
+                Email
+              </label>
               <input
                 id="email"
                 name="email"
@@ -73,26 +83,36 @@ function SignupPage() {
                   type="button"
                   onClick={() => setRole("buyer")}
                   className={`rounded-lg border px-4 py-3 text-sm transition-colors ${
-                    role === "buyer" ? "border-gold bg-secondary text-gold" : "border-border bg-secondary/50 text-muted-foreground hover:border-gold/50"
+                    role === "buyer"
+                      ? "border-gold bg-secondary text-gold"
+                      : "border-border bg-secondary/50 text-muted-foreground hover:border-gold/50"
                   }`}
                 >
                   Buyer
-                  <span className="mt-1 block text-xs text-muted-foreground">Book fittings, shop</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    Book fittings, shop
+                  </span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setRole("seller")}
                   className={`rounded-lg border px-4 py-3 text-sm transition-colors ${
-                    role === "seller" ? "border-gold bg-secondary text-gold" : "border-border bg-secondary/50 text-muted-foreground hover:border-gold/50"
+                    role === "seller"
+                      ? "border-gold bg-secondary text-gold"
+                      : "border-border bg-secondary/50 text-muted-foreground hover:border-gold/50"
                   }`}
                 >
                   Seller
-                  <span className="mt-1 block text-xs text-muted-foreground">List products &amp; services</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    List products &amp; services
+                  </span>
                 </button>
               </div>
             </div>
             <div>
-              <label htmlFor="password" className="text-xs uppercase tracking-widest text-gold">Password</label>
+              <label htmlFor="password" className="text-xs uppercase tracking-widest text-gold">
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -112,7 +132,9 @@ function SignupPage() {
             </button>
             <p className="text-center text-xs text-muted-foreground">
               Already have an account?{" "}
-              <Link to="/login" className="text-gold hover:underline">Log in</Link>
+              <Link to="/login" className="text-gold hover:underline">
+                Log in
+              </Link>
             </p>
           </form>
         </section>

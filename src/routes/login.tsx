@@ -28,7 +28,7 @@ function LoginPage() {
     try {
       await login(email, password);
       toast.success("Welcome back!");
-      navigate({ to: "/account" });
+      navigate({ to: "/dashboard" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Couldn't log in. Please try again.");
     } finally {
@@ -41,11 +41,17 @@ function LoginPage() {
       <Nav />
       <main className="pt-24">
         <section className="mx-auto max-w-md px-6 py-16">
-          <SectionHeader eyebrow="Account" title="Log in" description="Welcome back to TailorHub." />
+          <SectionHeader
+            eyebrow="Account"
+            title="Log in"
+            description="Welcome back to TailorHub."
+          />
 
           <form onSubmit={handleSubmit} className="glass-panel mt-10 space-y-4 rounded-3xl p-8">
             <div>
-              <label htmlFor="email" className="text-xs uppercase tracking-widest text-gold">Email</label>
+              <label htmlFor="email" className="text-xs uppercase tracking-widest text-gold">
+                Email
+              </label>
               <input
                 id="email"
                 name="email"
@@ -55,7 +61,9 @@ function LoginPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="text-xs uppercase tracking-widest text-gold">Password</label>
+              <label htmlFor="password" className="text-xs uppercase tracking-widest text-gold">
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -73,7 +81,9 @@ function LoginPage() {
             </button>
             <p className="text-center text-xs text-muted-foreground">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-gold hover:underline">Sign up</Link>
+              <Link to="/signup" className="text-gold hover:underline">
+                Sign up
+              </Link>
             </p>
           </form>
         </section>

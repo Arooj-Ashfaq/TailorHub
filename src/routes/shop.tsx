@@ -12,9 +12,15 @@ export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
       { title: "Shop — TailorHub" },
-      { name: "description", content: "Fabrics, ready-made garments and accessories curated by TailorHub." },
+      {
+        name: "description",
+        content: "Fabrics, ready-made garments and accessories curated by TailorHub.",
+      },
       { property: "og:title", content: "Shop — TailorHub" },
-      { property: "og:description", content: "Ready-to-wear and accessories from the TailorHub atelier." },
+      {
+        property: "og:description",
+        content: "Ready-to-wear and accessories from the TailorHub atelier.",
+      },
     ],
   }),
   component: ShopPage,
@@ -36,7 +42,15 @@ function ShopPage() {
       <Nav />
       <main className="pt-24">
         <section className="mx-auto max-w-7xl px-6 py-16">
-          <SectionHeader eyebrow="Shop" title={<>The <em className="text-gradient-gold not-italic">TailorHub</em> shop</>} description="Cloth, ready-to-wear and finishing touches, curated by our head tailors." />
+          <SectionHeader
+            eyebrow="Shop"
+            title={
+              <>
+                The <em className="text-gradient-gold not-italic">TailorHub</em> shop
+              </>
+            }
+            description="Cloth, ready-to-wear and finishing touches, curated by our head tailors."
+          />
         </section>
 
         <section className="mx-auto max-w-7xl px-6">
@@ -61,7 +75,10 @@ function ShopPage() {
           {isLoading && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-square animate-pulse rounded-2xl border border-border/60 bg-card" />
+                <div
+                  key={i}
+                  className="aspect-square animate-pulse rounded-2xl border border-border/60 bg-card"
+                />
               ))}
             </div>
           )}
@@ -73,15 +90,28 @@ function ShopPage() {
           {!isLoading && !isError && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {list.map((p) => (
-                <article key={p.id} className="hover-lift group overflow-hidden rounded-2xl border border-border/60 bg-card">
+                <article
+                  key={p.id}
+                  className="hover-lift group overflow-hidden rounded-2xl border border-border/60 bg-card"
+                >
                   <div className="relative aspect-square overflow-hidden">
-                    <img src={resolveImage(p.image)} alt={p.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <button aria-label="Wishlist" className="absolute right-3 top-3 rounded-full bg-background/70 p-2 backdrop-blur hover:text-gold">
+                    <img
+                      src={resolveImage(p.image)}
+                      alt={p.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <button
+                      aria-label="Wishlist"
+                      className="absolute right-3 top-3 rounded-full bg-background/70 p-2 backdrop-blur hover:text-gold"
+                    >
                       <Heart className="h-4 w-4" />
                     </button>
                   </div>
                   <div className="p-5">
-                    <div className="text-[10px] uppercase tracking-[0.25em] text-gold">{p.category}</div>
+                    <div className="text-[10px] uppercase tracking-[0.25em] text-gold">
+                      {p.category}
+                    </div>
                     <h3 className="mt-2 font-display text-lg leading-tight">{p.name}</h3>
                     <div className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
                       <Star className="h-3 w-3 fill-gold text-gold" /> {p.rating}

@@ -44,10 +44,7 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               Style notes & private previews, monthly.
             </p>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="mt-3 flex items-center gap-2"
-            >
+            <form onSubmit={(e) => e.preventDefault()} className="mt-3 flex items-center gap-2">
               <input
                 type="email"
                 placeholder="you@atelier.com"

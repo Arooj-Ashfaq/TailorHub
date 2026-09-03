@@ -47,7 +47,9 @@ function AccountPage() {
       <div className="min-h-screen bg-background">
         <Nav />
         <main className="pt-24">
-          <div className="mx-auto max-w-4xl px-6 py-24 text-center text-sm text-muted-foreground">Loading…</div>
+          <div className="mx-auto max-w-4xl px-6 py-24 text-center text-sm text-muted-foreground">
+            Loading…
+          </div>
         </main>
         <Footer />
       </div>
@@ -99,12 +101,35 @@ function AccountPage() {
             </aside>
 
             <div className="md:col-span-2">
+              <div className="mb-6 grid gap-3 sm:grid-cols-3">
+                <Link
+                  to="/contact"
+                  className="rounded-xl border border-border/60 bg-card p-4 text-center text-sm hover:border-gold hover:text-gold"
+                >
+                  Book a Fitting
+                </Link>
+                <Link
+                  to="/shop"
+                  className="rounded-xl border border-border/60 bg-card p-4 text-center text-sm hover:border-gold hover:text-gold"
+                >
+                  Browse Shop
+                </Link>
+                <Link
+                  to="/services"
+                  className="rounded-xl border border-border/60 bg-card p-4 text-center text-sm hover:border-gold hover:text-gold"
+                >
+                  Browse Services
+                </Link>
+              </div>
               <h3 className="font-display text-xl">My fitting requests</h3>
 
               {isLoadingAppointments && (
                 <div className="mt-4 space-y-3">
                   {Array.from({ length: 2 }).map((_, i) => (
-                    <div key={i} className="h-20 animate-pulse rounded-2xl border border-border/60 bg-card" />
+                    <div
+                      key={i}
+                      className="h-20 animate-pulse rounded-2xl border border-border/60 bg-card"
+                    />
                   ))}
                 </div>
               )}

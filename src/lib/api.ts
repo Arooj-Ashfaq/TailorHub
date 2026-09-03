@@ -88,11 +88,16 @@ export function getMyProducts(): Promise<Product[]> {
   return request<Product[]>("/api/products/mine");
 }
 
-export function createProduct(data: Omit<Product, "id" | "sellerId" | "createdAt">): Promise<Product> {
+export function createProduct(
+  data: Omit<Product, "id" | "sellerId" | "createdAt">,
+): Promise<Product> {
   return request<Product>("/api/products", { method: "POST", body: JSON.stringify(data) });
 }
 
-export function updateProduct(id: number, data: Partial<Omit<Product, "id" | "sellerId" | "createdAt">>): Promise<Product> {
+export function updateProduct(
+  id: number,
+  data: Partial<Omit<Product, "id" | "sellerId" | "createdAt">>,
+): Promise<Product> {
   return request<Product>(`/api/products/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -108,11 +113,16 @@ export function getMyServices(): Promise<Service[]> {
   return request<Service[]>("/api/services/mine");
 }
 
-export function createService(data: Omit<Service, "id" | "sellerId" | "createdAt">): Promise<Service> {
+export function createService(
+  data: Omit<Service, "id" | "sellerId" | "createdAt">,
+): Promise<Service> {
   return request<Service>("/api/services", { method: "POST", body: JSON.stringify(data) });
 }
 
-export function updateService(id: number, data: Partial<Omit<Service, "id" | "sellerId" | "createdAt">>): Promise<Service> {
+export function updateService(
+  id: number,
+  data: Partial<Omit<Service, "id" | "sellerId" | "createdAt">>,
+): Promise<Service> {
   return request<Service>(`/api/services/${id}`, { method: "PUT", body: JSON.stringify(data) });
 }
 
@@ -148,14 +158,22 @@ export function getAllAppointments(): Promise<Appointment[]> {
 }
 
 export function updateAppointmentStatus(id: number, status: string): Promise<Appointment> {
-  return request<Appointment>(`/api/appointments/${id}`, { method: "PATCH", body: JSON.stringify({ status }) });
+  return request<Appointment>(`/api/appointments/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });
 }
 
 export function deleteAppointment(id: number): Promise<void> {
   return request<void>(`/api/appointments/${id}`, { method: "DELETE" });
 }
 
-export function signup(data: { name: string; email: string; password: string; role: "buyer" | "seller" }): Promise<AuthResponse> {
+export function signup(data: {
+  name: string;
+  email: string;
+  password: string;
+  role: "buyer" | "seller";
+}): Promise<AuthResponse> {
   return request<AuthResponse>("/api/auth/signup", {
     method: "POST",
     body: JSON.stringify(data),
@@ -182,7 +200,10 @@ export function getAdminUsers(): Promise<User[]> {
 }
 
 export function updateUserRole(id: number, role: UserRole): Promise<User> {
-  return request<User>(`/api/admin/users/${id}/role`, { method: "PATCH", body: JSON.stringify({ role }) });
+  return request<User>(`/api/admin/users/${id}/role`, {
+    method: "PATCH",
+    body: JSON.stringify({ role }),
+  });
 }
 
 export function deleteUser(id: number): Promise<void> {

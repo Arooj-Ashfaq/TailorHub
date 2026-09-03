@@ -77,9 +77,8 @@ function Hero() {
             <span className="text-gradient-gold italic">perfectly fitted</span> suit.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-            Hand-drafted patterns, cloth chosen thread by thread, and a fit
-            calibrated to the millimetre. Bespoke tailoring as it was meant to
-            be.
+            Hand-drafted patterns, cloth chosen thread by thread, and a fit calibrated to the
+            millimetre. Bespoke tailoring as it was meant to be.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
@@ -108,12 +107,21 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["Loro Piana", "Ermenegildo Zegna", "Scabal", "Holland & Sherry", "Dormeuil", "Vitale Barberis"];
+  const items = [
+    "Loro Piana",
+    "Ermenegildo Zegna",
+    "Scabal",
+    "Holland & Sherry",
+    "Dormeuil",
+    "Vitale Barberis",
+  ];
   return (
     <div className="border-y border-border/40 bg-ink py-6 overflow-hidden">
       <div className="flex items-center justify-around gap-12 text-xs uppercase tracking-[0.3em] text-muted-foreground">
         {items.map((i) => (
-          <span key={i} className="whitespace-nowrap">{i}</span>
+          <span key={i} className="whitespace-nowrap">
+            {i}
+          </span>
         ))}
       </div>
     </div>
@@ -121,19 +129,31 @@ function Marquee() {
 }
 
 function Services() {
-  const { data: allServices = [], isLoading, isError } = useQuery({ queryKey: ["services"], queryFn: getServices });
+  const {
+    data: allServices = [],
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ["services"], queryFn: getServices });
   const services = allServices.slice(0, 3);
   return (
     <section className="mx-auto max-w-7xl px-6 py-28">
       <SectionHeader
         eyebrow="Featured Services"
-        title={<>Bespoke, from <em className="text-gradient-gold not-italic">first draft</em> to final stitch</>}
+        title={
+          <>
+            Bespoke, from <em className="text-gradient-gold not-italic">first draft</em> to final
+            stitch
+          </>
+        }
         description="Every garment is drafted from scratch on paper, cut by hand, and finished across up to 60 hours of atelier work."
       />
       {isLoading && (
         <div className="mt-16 grid gap-8 md:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="aspect-[4/5] animate-pulse rounded-2xl border border-border/60 bg-card" />
+            <div
+              key={i}
+              className="aspect-[4/5] animate-pulse rounded-2xl border border-border/60 bg-card"
+            />
           ))}
         </div>
       )}
@@ -145,7 +165,10 @@ function Services() {
       {!isLoading && !isError && (
         <div className="mt-16 grid gap-8 md:grid-cols-3">
           {services.map((s) => (
-            <article key={s.id} className="hover-lift group overflow-hidden rounded-2xl border border-border/60 bg-card">
+            <article
+              key={s.id}
+              className="hover-lift group overflow-hidden rounded-2xl border border-border/60 bg-card"
+            >
               <div className="relative aspect-[4/5] overflow-hidden">
                 <img
                   src={resolveImage(s.image)}
@@ -183,10 +206,26 @@ function Services() {
 
 function WhyUs() {
   const items = [
-    { icon: Scissors, title: "Master Tailors", desc: "Over 200 combined years of Savile-Row-trained craft in a single atelier." },
-    { icon: Ruler, title: "22-point Measurement", desc: "A truly personal block, kept on file for a lifetime of perfect fits." },
-    { icon: Award, title: "Certified Cloths", desc: "Only the finest Super 120s–180s from Italy's oldest cloth mills." },
-    { icon: Sparkles, title: "Hand-finished", desc: "Milanese buttonholes, pick-stitched lapels, functional cuffs—always." },
+    {
+      icon: Scissors,
+      title: "Master Tailors",
+      desc: "Over 200 combined years of Savile-Row-trained craft in a single atelier.",
+    },
+    {
+      icon: Ruler,
+      title: "22-point Measurement",
+      desc: "A truly personal block, kept on file for a lifetime of perfect fits.",
+    },
+    {
+      icon: Award,
+      title: "Certified Cloths",
+      desc: "Only the finest Super 120s–180s from Italy's oldest cloth mills.",
+    },
+    {
+      icon: Sparkles,
+      title: "Hand-finished",
+      desc: "Milanese buttonholes, pick-stitched lapels, functional cuffs—always.",
+    },
   ];
   return (
     <section className="border-y border-border/40 bg-ink">
@@ -208,10 +247,26 @@ function WhyUs() {
 
 function HowItWorks() {
   const steps = [
-    { n: "01", title: "Consultation", desc: "A private session with your tailor to discuss cut, cloth and occasion." },
-    { n: "02", title: "Measurement", desc: "22 measurements, taken with a personal block filed under your name." },
-    { n: "03", title: "Craftsmanship", desc: "Your pattern is cut by hand and stitched over 40–60 atelier hours." },
-    { n: "04", title: "Final Fitting", desc: "Nip, tuck and hand-finish until every line falls exactly right." },
+    {
+      n: "01",
+      title: "Consultation",
+      desc: "A private session with your tailor to discuss cut, cloth and occasion.",
+    },
+    {
+      n: "02",
+      title: "Measurement",
+      desc: "22 measurements, taken with a personal block filed under your name.",
+    },
+    {
+      n: "03",
+      title: "Craftsmanship",
+      desc: "Your pattern is cut by hand and stitched over 40–60 atelier hours.",
+    },
+    {
+      n: "04",
+      title: "Final Fitting",
+      desc: "Nip, tuck and hand-finish until every line falls exactly right.",
+    },
   ];
   return (
     <section className="mx-auto max-w-7xl px-6 py-28">
@@ -239,13 +294,20 @@ function Stats() {
   ];
   return (
     <section className="relative overflow-hidden border-y border-border/40">
-      <img src={fabrics} alt="Luxury fabrics" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" />
+      <img
+        src={fabrics}
+        alt="Luxury fabrics"
+        loading="lazy"
+        className="absolute inset-0 h-full w-full object-cover opacity-25"
+      />
       <div className="absolute inset-0 bg-background/60" />
       <div className="relative mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-24 md:grid-cols-4">
         {stats.map((s) => (
           <div key={s.l} className="text-center">
             <div className="text-gradient-gold font-display text-5xl md:text-6xl">{s.v}</div>
-            <div className="mt-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">{s.l}</div>
+            <div className="mt-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+              {s.l}
+            </div>
           </div>
         ))}
       </div>
@@ -254,7 +316,14 @@ function Stats() {
 }
 
 function Portfolio() {
-  const imgs = [serviceSuit, serviceWedding, serviceShirt, serviceSuit, serviceWedding, serviceShirt];
+  const imgs = [
+    serviceSuit,
+    serviceWedding,
+    serviceShirt,
+    serviceSuit,
+    serviceWedding,
+    serviceShirt,
+  ];
   return (
     <section className="mx-auto max-w-7xl px-6 py-28">
       <SectionHeader eyebrow="Latest Designs" title="Recent work from the atelier" />
@@ -264,7 +333,12 @@ function Portfolio() {
             key={i}
             className={`group relative overflow-hidden rounded-2xl ${i % 5 === 0 ? "md:row-span-2 aspect-[3/5]" : "aspect-[4/5]"}`}
           >
-            <img src={src} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <img
+              src={src}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
             <div className="absolute bottom-4 left-5 translate-y-2 text-sm text-gold opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
               View piece →
@@ -277,7 +351,11 @@ function Portfolio() {
 }
 
 function Testimonials() {
-  const { data: t = [], isLoading, isError } = useQuery({ queryKey: ["testimonials"], queryFn: getTestimonials });
+  const {
+    data: t = [],
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ["testimonials"], queryFn: getTestimonials });
   return (
     <section className="border-y border-border/40 bg-ink">
       <div className="mx-auto max-w-7xl px-6 py-28">
@@ -331,17 +409,25 @@ function CtaBanner() {
           <div>
             <Package className="h-8 w-8 text-gold" strokeWidth={1.2} />
             <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.05]">
-              Ready for a suit that <em className="text-gradient-gold not-italic">fits like nothing else?</em>
+              Ready for a suit that{" "}
+              <em className="text-gradient-gold not-italic">fits like nothing else?</em>
             </h2>
             <p className="mt-4 max-w-md text-muted-foreground">
-              Book a private fitting at our atelier, or invite our master tailor to your home or office.
+              Book a private fitting at our atelier, or invite our master tailor to your home or
+              office.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 md:justify-end">
-            <Link to="/services" className="rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground hover:shadow-[0_0_40px_-5px_var(--gold)] transition-all">
+            <Link
+              to="/services"
+              className="rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground hover:shadow-[0_0_40px_-5px_var(--gold)] transition-all"
+            >
               Book Appointment
             </Link>
-            <Link to="/contact" className="rounded-full border border-gold/40 px-7 py-3.5 text-sm hover:bg-gold/10">
+            <Link
+              to="/contact"
+              className="rounded-full border border-gold/40 px-7 py-3.5 text-sm hover:bg-gold/10"
+            >
               Talk to a tailor
             </Link>
           </div>
