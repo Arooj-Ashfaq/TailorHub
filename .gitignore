@@ -16,6 +16,12 @@ dist-ssr
 .nitro
 *.local
 
+# Environment variables (VITE_API_URL etc.) — .env.example stays tracked
+.env
+.env.local
+.env.*.local
+.vercel
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

@@ -89,6 +89,25 @@ does.
 If you see `Error: listen EAFNOSUPPORT ... address: '::'` when starting the dev server, your
 machine/container doesn't support IPv6 — run `npm run dev -- --host 0.0.0.0` instead.
 
+## Deploying to Vercel
+
+1. Deploy the backend first (see [`TailorHub-Backend`'s README](https://github.com/Arooj-Ashfaq/TailorHub-Backend#deploying-to-render)) and note its URL, e.g. `https://tailorhub-backend.onrender.com`.
+2. In Vercel: **Add New → Project**, import this repo. Vercel/Nitro auto-detect the Vercel
+   environment at build time and produce the right output — no framework preset needed.
+3. Add one environment variable in the Vercel project settings:
+   - `VITE_API_URL` = your backend's URL from step 1 (no trailing slash)
+4. Deploy. Once it's live, copy the Vercel URL and set it as `CORS_ORIGIN` on the backend
+   (Render dashboard), then redeploy the backend — the two need each other's URLs to talk.
+5. If you use Vercel preview deployments (a different URL per branch/PR), add that URL too, as a
+   comma-separated second value in the backend's `CORS_ORIGIN`.
+
+**Why `VITE_API_URL` is needed:** in dev, `fetch("/api/...")` works because the Vite dev server
+proxies it to your local backend (see `vite.config.ts`) — that proxy only exists in `vite dev`,
+not in the production build. In production the frontend and backend are on different domains
+entirely (Vercel + Render), so the API client (`src/lib/api.ts`) needs the backend's full URL to
+call it directly. Leave `VITE_API_URL` unset locally and everything keeps using the dev proxy as
+before.
+
 ---
 
 <details>

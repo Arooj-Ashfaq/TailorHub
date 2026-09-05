@@ -1,5 +1,13 @@
 import { getToken } from "./auth-storage";
 
+// In dev, requests go to relative "/api/..." paths and the Vite dev-server
+// proxy (see vite.config.ts) forwards them to the local backend — no env
+// var needed. In production there's no dev-server proxy, so the frontend
+// (deployed on Vercel) needs the deployed backend's full URL (on Render) to
+// call it cross-origin. Set VITE_API_URL in Vercel's project environment
+// variables, e.g. https://tailorhub-backend.onrender.com — no trailing slash.
+const API_BASE = import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "";
+
 export type UserRole = "buyer" | "seller" | "admin";
 
 export type Product = {
@@ -62,7 +70,7 @@ export type AuthResponse = {
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const token = getToken();
-  const res = await fetch(path, {
+  const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     credentials: "include", // send the httpOnly auth cookie too
     headers: {
